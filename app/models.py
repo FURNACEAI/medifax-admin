@@ -2,10 +2,11 @@ import requests
 import json
 from app import login
 from flask_login import UserMixin
+from flask import session
 
 class User(UserMixin):
     headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
-    id = ''
+    user_id = ''
     first_name = ''
 
     def add(self, first_name, last_name, password, email, role, active):
@@ -40,10 +41,10 @@ class User(UserMixin):
         else:
             return False
 
-    def fetch(self, id):
+    def load(self, id):
         url = "https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/%s" % id
         r = requests.get(url).json()
-        self.id = r['id']
+        self.user_id = r['id']
         self.first_name = r['name']['first']
         return self
 
@@ -57,4 +58,7 @@ class User(UserMixin):
 def load_user(id):
     user = User()
     # return User.get(id)
-    return user.fetch(id)
+    u = user.load(id)
+    session['user_first_name'] = u.first_name
+    session['user_id'] = u.user_id
+    return u
