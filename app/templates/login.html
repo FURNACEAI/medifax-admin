@@ -51,26 +51,42 @@
                   <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2">
                     <span>Log in Using Your Account Details</span>
                   </p>
+                  {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                  {% endwith %}
                   <div class="card-body pt-0">
-                    <form class="form-horizontal" action="index.html">
+                    <form class="form-horizontal" method="post" action="">
+                      {{ form.hidden_tag() }}
                       <fieldset class="form-group floating-label-form-group">
-                        <label for="user-name">Username</label>
-                        <input type="text" class="form-control" id="user-name" placeholder="Your Username">
+                        {{ form.username.label }}
+                        {% for error in form.username.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                        {{ form.username(class="form-control", id="user-name", placeholder="Your Username") }}
                       </fieldset>
                       <fieldset class="form-group floating-label-form-group mb-1">
-                        <label for="user-password">Password</label>
-                        <input type="password" class="form-control" id="user-password" placeholder="Enter Password">
+                        {{ form.password.label }}
+                        {% for error in form.password.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                        {{ form.password(class="form-control", id="user-password", placeholder="Your Password") }}
                       </fieldset>
                       <div class="form-group row">
                         <div class="col-md-6 col-12 text-center text-sm-left">
                           <fieldset>
-                            <input type="checkbox" id="remember-me" class="chk-remember">
-                            <label for="remember-me"> Remember Me</label>
+                            {{ form.remember_me(id="remember-me", class="chk-remember") }} {{ form.remember_me.label }}
                           </fieldset>
                         </div>
                         <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
                       </div>
-                      <button type="submit" class="btn btn-outline-primary btn-block"><i class="ft-unlock"></i> Login</button>
+                      {{ form.submit(class="btn btn-outline-primary btn-block") }}
+
                     </form>
                   </div>
                 </div>

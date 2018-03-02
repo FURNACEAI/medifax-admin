@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-header row">
+  <div class="content-header-left col-md-6 col-12 mb-2">
+    <h3 class="content-header-title mb-0">Employees</h3>
+    <div class="row breadcrumbs-top">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a>
+          </li>
+          <li class="breadcrumb-item"><a href="/employees">Employees</a>
+          </li>
+          <li class="breadcrumb-item active">Add
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <!-- Zero configuration table -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title" id="horz-layout-colored-controls">Employee Profile</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+              <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              <li><a data-action="close"><i class="ft-x"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collpase show">
+          <div class="card-body">
+            <form class="form form-horizontal" method="POST" action="">
+              {{ form.hidden_tag() }}
+              <div class="form-body">
+                <h4 class="form-section"><i class="icon-eye6"></i> User Info</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="userinput1">{{ form.first_name.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.first_name(class="form-control border-primary", id="user-firstname", placeholder="First Name") }}
+                        {% for error in form.first_name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="userinput2">{{ form.last_name.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.last_name(class="form-control border-primary", id="user-lastname", placeholder="Last Name") }}
+                        {% for error in form.last_name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 icheck-checkbox">
+                    <div class="form-group row icheck_minimal skin">
+                      <label class="col-md-3 label-control" for="userinput3">{{ form.email.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.email(class="form-control border-primary", id="user-email", placeholder="Email") }}
+                        {% for error in form.email.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="userinput4">{{ form.password.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.password(class="form-control border-primary", id="user-password", placeholder="Password") }}
+                        {% for error in form.password.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 icheck-checkbox">
+                    <div class="form-group row icheck_minimal skin">
+                      <label class="col-md-3 label-control" for="userinput3">{{ form.user_role.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.user_role(class="hide-search select2", id="user-role", style="width: 50%") }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="userinput4">{{ form.active.label }}</label>
+                      <div class="col-md-9">
+                        {{ form.active(class="hide-search select2", id="user-active", style="width: 50%") }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <a href="/employees"><button type="button" class="btn btn-warning mr-1">
+                  <i class="ft-x"></i> Cancel
+                </button></a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-check-square-o"></i> Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
