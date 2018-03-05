@@ -3,17 +3,17 @@ import datetime
 import os
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
-from app import app
+from app import application
 from app.models import User
 from app.forms import LoginForm, AddEmployeeForm, AddCustomerForm
 
-@app.template_filter('ctime')
+@application.template_filter('ctime')
 def timectime(s):
     return '2018-02-15'
     # return datetime.datetime.fromtimestamp(s).strftime('%m-%d')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -30,7 +30,7 @@ def login():
 
 
 """ LOGOUT """
-@app.route('/logout')
+@application.route('/logout')
 def logout():
     """
     Logs the user out of the admin panel
@@ -42,7 +42,7 @@ def logout():
 
 
 """ EMPLOYEE > DELETE """
-@app.route('/employees/delete/<user_id>', methods=['GET'])
+@application.route('/employees/delete/<user_id>', methods=['GET'])
 def delete_employee(user_id):
 
     if not current_user.is_authenticated:
@@ -55,7 +55,7 @@ def delete_employee(user_id):
 
 
 """ EMPLOYEE > ADD """
-@app.route('/employees/add', methods=['GET', 'POST'])
+@application.route('/employees/add', methods=['GET', 'POST'])
 def add_employee():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -72,7 +72,7 @@ def add_employee():
 
 
 """ EMPLOYEE > LIST """
-@app.route('/employees', methods=['GET'])
+@application.route('/employees', methods=['GET'])
 def list_employees():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -82,7 +82,7 @@ def list_employees():
     return render_template('employees/list.html', title='Employees | Medifax', data=r.json())
 
 """ CUSTOMER > LIST """
-@app.route('/customers', methods=['GET'])
+@application.route('/customers', methods=['GET'])
 def list_customers():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -93,7 +93,7 @@ def list_customers():
 
 
 """ CUSTOMER > ADD """
-@app.route('/customers/add', methods=['GET', 'POST'])
+@application.route('/customers/add', methods=['GET', 'POST'])
 def add_customer():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -111,8 +111,8 @@ def add_customer():
 
 
 
-@app.route('/')
-@app.route('/index')
+@application.route('/')
+@application.route('/index')
 def index():
     if current_user.is_authenticated:
         return render_template('dashboard.html', title='Medifax Dashboard')
