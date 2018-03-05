@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
-#from config import Config
-import boto3
+# from config import Config
+# import boto3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ba62343d-31e4-4cbe-957c-cbc1f0e30a14'
