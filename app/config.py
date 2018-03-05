@@ -1,14 +1,14 @@
 import os
 
 _AWS = {
-    'status': 'dev'
-    'base' : 'https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/'
+    'status': 'dev',
+    'base' : 'https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/',
     'employees': {
         'list': '/employee/list',
         'add': '/employee/create',
         'delete': '/employee/delete/',
         'update': '/employee/update/',
-        'get': '/employee/'
+        'get': '/employee/',
         'auth': '/employee/auth'
     },
     'customers': {
@@ -16,7 +16,7 @@ _AWS = {
         'add': '/employee/create',
         'delete': '/employee/delete/',
         'update': '/employee/update/',
-        'get': '/employee/'
+        'get': '/employee/',
         'auth': '/employee/auth'
     }
 }
