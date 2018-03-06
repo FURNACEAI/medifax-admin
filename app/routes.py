@@ -5,12 +5,12 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from app import application
 from app.models import User
-from app.forms import LoginForm, AddEmployeeForm, AddCustomerForm
+from app.forms import LoginForm, AddEmployeeForm, CreateCustomerForm
 
 @application.template_filter('ctime')
 def timectime(s):
-    return '2018-02-15'
-    # return datetime.datetime.fromtimestamp(s).strftime('%m-%d')
+    """ Formats a Python timestamp to a human-readable format """
+    return datetime.datetime.fromtimestamp(s/1000).strftime('%m/%d/%Y')
 
 
 @application.route('/login', methods=['GET', 'POST'])
@@ -97,7 +97,7 @@ def list_customers():
 def add_customer():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    form = AddCustomerForm()
+    form = CreateCustomerForm()
     if form.validate_on_submit():
         user = User()
         create = user.add(form.first_name.data, form.last_name.data, form.password.data, form.email.data, form.user_role.data, form.active.data)

@@ -39,105 +39,155 @@
             <form class="form form-horizontal" method="POST" action="">
               {{ form.hidden_tag() }}
               <div class="form-body">
-                <h4 class="form-section"><i class="icon-eye6"></i> Contact Information</h4>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label class="col-md-3 label-control" for="userinput1">{{ form.first_name.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.first_name(class="form-control border-primary", id="user-firstname", placeholder="First Name") }}
-                        {% for error in form.first_name.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label class="col-md-3 label-control" for="userinput2">{{ form.last_name.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.last_name(class="form-control border-primary", id="user-lastname", placeholder="Last Name") }}
-                        {% for error in form.last_name.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 icheck-checkbox">
-                    <div class="form-group row icheck_minimal skin">
-                      <label class="col-md-3 label-control" for="userinput3">{{ form.home_phone.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.home_phone(class="form-control border-primary", id="user-email", placeholder="Email") }}
-                        {% for error in form.home_phone.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label class="col-md-3 label-control" for="userinput4">{{ form.mobile_phone.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.mobile_phone(class="form-control border-primary", id="user-password", placeholder="Password") }}
-                        {% for error in form.mobile_phone.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 icheck-checkbox">
-                    <div class="form-group row icheck_minimal skin">
-                      <label class="col-md-3 label-control" for="userinput3">{{ form.email.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.email(class="form-control border-primary", id="user-email", placeholder="Email") }}
-                        {% for error in form.email.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label class="col-md-3 label-control" for="userinput4">{{ form.password.label }}</label>
-                      <div class="col-md-9">
-                        {{ form.password(class="form-control border-primary", id="user-password", placeholder="Password") }}
-                        {% for error in form.password.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h4 class="form-section"><i class="icon-eye6"></i> Home Address</h4>
-              <div class="row">
-                <div class="col-md-6 icheck-checkbox">
-                  <div class="form-group row icheck_minimal skin">
-                    <label class="col-md-3 label-control" for="userinput3">{{ form.street_address.label }}</label>
-                    <div class="col-md-9">
-                      {{ form.street_address(class="form-control border-primary", id="user-street-address", placeholder="Street Address") }}
-                      {% for error in form.street_address.errors %}
-                      <span style="color: red;">[{{ error }}]</span>
-                      {% endfor %}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
+                <h4 class="form-section"><i class="icon-eye6"></i> Contact & Demographic Information</h4>
+
+                <!-- Customer First Name -->
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="userinput4">{{ form.street_address_2.label }}</label>
-                  <div class="col-md-9">
-                    {{ form.street_address_2(class="form-control border-primary", id="user-street_address_2", placeholder="Street Address 2") }}
-                    {% for error in form.street_address_2.errors %}
+                  <label class="col-md-3 label-control" for="customer-firstname">{{ form.first_name.label }}</label>
+                  <div class="col-md-6">
+                    {{ form.first_name(class="form-control", id="customer-firstname", placeholder="First Name") }}
+                    {% for error in form.first_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                   </div>
-                </div>
+                  <div class="col-md-3"></div>
               </div>
-            </div>
+
+              <!-- Customer Middle Initial -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-middleinitial">{{ form.middle_initial.label }}</label>
+                <div class="col-md-6">
+                  {{ form.middle_initial(class="form-control", id="customer-middleinitial", placeholder="Middle Initial") }}
+                  {% for error in form.middle_initial.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Last Name -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-lastname">{{ form.last_name.label }}</label>
+                <div class="col-md-6">
+                  {{ form.last_name(class="form-control", id="customer-lastname", placeholder="Last Name") }}
+                  {% for error in form.last_name.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Email -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-email">{{ form.email.label }}</label>
+                <div class="col-md-6">
+                  {{ form.email(class="form-control", id="customer-email", placeholder="name@domain.com") }}
+                  {% for error in form.email.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Home Phone -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-homephone">{{ form.home_phone.label }}</label>
+                <div class="col-md-6">
+                  {{ form.home_phone(class="form-control phone-inputmask", id="customer-homephone", placeholder="") }}
+                  {% for error in form.home_phone.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Mobile Phone -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-mobilephone">{{ form.mobile_phone.label }}</label>
+                <div class="col-md-6">
+                  {{ form.mobile_phone(class="form-control phone-inputmask", id="customer-mobilephone", placeholder="") }}
+                  {% for error in form.mobile_phone.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Date of Birth -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-dob">{{ form.dob.label }}</label>
+                <div class="col-md-6">
+                  {{ form.dob(class="form-control date-inputmask", id="customer-dob", placeholder="") }}
+                  {% for error in form.dob.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <h4 class="form-section"><i class="icon-eye6"></i> Home Address</h4>
+
+              <!-- Customer Street Address -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-street_address">{{ form.street_address.label }}</label>
+                <div class="col-md-6">
+                  {{ form.street_address(class="form-control", id="customer-street_address", placeholder="Street Address") }}
+                  {% for error in form.street_address.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer Street Address 2 -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-street_address_2">{{ form.street_address_2.label }}</label>
+                <div class="col-md-6">
+                  {{ form.street_address_2(class="form-control", id="customer-street_address_2", placeholder="Street Address 2 (optional)") }}
+                  {% for error in form.street_address_2.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer City -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-city">{{ form.city.label }}</label>
+                <div class="col-md-6">
+                  {{ form.city(class="form-control", id="customer-city", placeholder="City") }}
+                  {% for error in form.city.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer State -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-state">{{ form.state.label }}</label>
+                <div class="col-md-6">
+                  {{ form.state(class="form-control", id="customer-state", placeholder="") }}
+                  {% for error in form.state.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Customer ZIP -->
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="customer-zipcode">{{ form.zipcode.label }}</label>
+                <div class="col-md-6">
+                  {{ form.zipcode(class="form-control", id="customer-zipcode", placeholder="") }}
+                  {% for error in form.zipcode.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <!-- Form Actions -->
               <div class="form-actions right">
                 <a href="/employees"><button type="button" class="btn btn-warning mr-1">
                   <i class="ft-x"></i> Cancel
@@ -146,7 +196,9 @@
                   <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>
+
             </form>
+            </div>
           </div>
         </div>
       </div>

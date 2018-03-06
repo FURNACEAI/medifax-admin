@@ -4,6 +4,23 @@ from app import login
 from flask_login import UserMixin
 from flask import session
 
+class Customer():
+    headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
+    user_id = ''
+    first_name = ''
+
+    def create(self, first_name, last_name, password, email, role, active):
+        """ Creates a new custome record via an AWS Lambda function """
+        payload = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "password": password,
+            "user_role": role,
+            "active": active
+        }
+
+
 class User(UserMixin):
     headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
     user_id = ''
