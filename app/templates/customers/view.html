@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h4 class="text-uppercase">Customer Record</h4>
+    </div>
+  </div>
+  <div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <ul class="nav nav-tabs nav-justified">
+              <li class="nav-item">
+                <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" aria-controls="active"
+                aria-expanded="true">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" aria-controls="link"
+                aria-expanded="false">Medical History</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="dental-tab" data-toggle="tab" href="#link" aria-controls="link"
+                aria-expanded="false">Dental History</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#linkOpt" aria-controls="linkOpt">Medications</a>
+              </li>
+            </ul>
+            <div class="tab-content px-1 pt-1">
+              <div role="tabpanel" class="tab-pane active in" id="active" aria-labelledby="active-tab"
+              aria-expanded="true">
+              <div class="container">
+                <div class="row">
+                  <div class="col col-2">
+                    <strong>Name</strong>
+                  </div>
+                  <div class="col col-4">
+                    {{ data['name']['first'] }} {{ data['name']['last'] }}
+                  </div>
+                  <div class="col col-2">
+                    <div><strong>Status</strong></div>
+                    <div><strong>Active? </strong></div>
+                    <div><strong>Access Code </strong></div>
+                  </div>
+                  <div class="col col-4">
+                    <div>{{ data['status'] }}</div>
+                    <div>{{ data['active'] }}</div>
+                    <div>{{ data['access_code'] }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-2">
+                    <strong>Home Address</strong>
+                  </div>
+                  <div class="col col-4">
+                    <div>{{ data['home_address']['street_address'] }} </div>
+                    <div>{{ data['home_address']['street_address_2'] }}</div>
+                    <div>{{ data['home_address']['city'] }}, {{ data['home_address']['state'] }} {{ data['home_address']['zipcode'] }}</div>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col col-2">
+                    <strong>Email Address</strong>
+                  </div>
+                  <div class="col col-4">
+                    <div>{{ data['email'] }} </div>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col col-2">
+                    <strong>Home Phone</strong>
+                  </div>
+                  <div class="col col-4">
+                    <div>{{ data['phone']['home'] }} </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-2">
+                    <strong>Mobile Phone</strong>
+                  </div>
+                  <div class="col col-4">
+                    <div>{{ data['phone']['mobile'] }} </div>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+              </div>
+              <div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                <p>Chocolate bar gummies sesame snaps. Liquorice cake sesame
+                  snaps cotton candy cake sweet brownie. Cotton candy candy
+                  canes brownie. Biscuit pudding sesame snaps pudding pudding
+                  sesame snaps biscuit tiramisu.</p>
+              </div>
+              <div class="tab-pane" id="medical" role="tabpanel" aria-labelledby="medical-tab"
+              aria-expanded="false">
+                <p>Cookie icing tootsie roll cupcake jelly-o sesame snaps. Gummies
+                  cookie dragée cake jelly marzipan donut pie macaroon. Gingerbread
+                  powder chocolate cake icing. Cheesecake gummi bears ice
+                  cream marzipan.</p>
+              </div>
+              <div class="tab-pane" id="linkOpt" role="tabpanel" aria-labelledby="linkOpt-tab"
+              aria-expanded="false">
+                <p>Cookie icing tootsie roll cupcake jelly-o sesame snaps. Gummies
+                  cookie dragée cake jelly marzipan donut pie macaroon. Gingerbread
+                  powder chocolate cake icing. Cheesecake gummi bears ice
+                  cream marzipan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

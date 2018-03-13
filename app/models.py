@@ -3,22 +3,42 @@ import json
 from app import login
 from flask_login import UserMixin
 from flask import session
+from app import config as cfg
 
 class Customer():
     headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
     user_id = ''
     first_name = ''
 
-    def create(self, first_name, last_name, password, email, role, active):
-        """ Creates a new custome record via an AWS Lambda function """
+    def edit(self, form):
+        return True
+
+
+    def create(self, form):
+        """ Creates a new customer record via an AWS Lambda function """
         payload = {
-            "first_name": first_name,
-            "last_name": last_name,
-            "email": email,
-            "password": password,
-            "user_role": role,
-            "active": active
+            "first_name": form.first_name.data,
+            "middle_initial": form.middle_initial.data,
+            "last_name": form.last_name.data,
+            "email": form.email.data,
+            "home_phone": form.home_phone.data,
+            "mobile_phone": form.mobile_phone.data,
+            "street_address": form.street_address.data,
+            "street_address_2": form.street_address_2.data,
+            "city": form.city.data,
+            "state": form.state.data,
+            "zipcode": form.zipcode.data,
+            "dob": form.dob.data
         }
+        url = "%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['add'])
+        payload = json.dumps(payload)
+        r = requests.post(url, headers=self.headers, data=payload)
+        req = r.json()
+        if req['message'] == 'Success':
+            self.id = req['id']
+            return True
+        else:
+            return False
 
 
 class User(UserMixin):

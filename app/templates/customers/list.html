@@ -57,7 +57,6 @@
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Role</th>
                     <th>Email</th>
                     <th>Creation Date</th>
                     <th>Active</th>
@@ -68,13 +67,15 @@
                   {% for block in data %}
                   <tr>
                     <td>{{ block['name']['first'] }} {{ block['name']['last'] }}</td>
-                    <td>{{ block['user_role'] }}</td>
                     <td>{{ block['email'] }}</td>
                     <td>{{ block['created_on'] | ctime }}</td>
                     <td>{{ block['active'] }}</td>
                     <td>
-                      <button type="button" class="btn btn-icon btn-primary mr-1"><i class="fa fa-edit"></i></button>
-                      <a href="/employees/delete/{{ block['id'] }}" title="Delete Employee"><button type="button" class="btn btn-icon btn-danger mr-1"><i class="fa fa-minus-circle"></i></button></a>
+                      <a href="/customers/view/{{ block['id'] }}"><button type="button" class="btn btn-icon btn-info mr-1"><i class="fa fa-eye"></i></button></a>
+
+                      <a href="/customers/edit/{{ block['id'] }}" title="Edit Employee"><button type="button" class="btn btn-icon btn-primary mr-1"><i class="fa fa-edit"></i></button></a>
+
+                      <a href="/customers/delete/{{ block['id'] }}" title="Delete Employee"><button type="button" class="btn btn-icon btn-danger mr-1"><i class="fa fa-minus-circle"></i></button></a>
                     </td>
                   </tr>
                   {% endfor %}
@@ -82,7 +83,6 @@
                 <tfoot>
                   <tr>
                     <th>Name</th>
-                    <th>Role</th>
                     <th>Email</th>
                     <th>Creation Date</th>
                     <th>Active</th>

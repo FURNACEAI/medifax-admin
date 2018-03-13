@@ -1,0 +1,460 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/css/file-uploaders/dropzone.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/plugins/file-uploaders/dropzone.css') }}">
+
+<div class="content-header row">
+  <div class="content-header-left col-md-6 col-12 mb-2">
+    <h3 class="content-header-title mb-0">Customers</h3>
+    <div class="row breadcrumbs-top">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a>
+          </li>
+          <li class="breadcrumb-item"><a href="/employees">Customers</a>
+          </li>
+          <li class="breadcrumb-item active">Edit
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <!-- Zero configuration table -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title" id="horz-layout-colored-controls">Customer Record for {{data['name']['first']}}  {{data['name']['last']}} (DOB: {{data['dob']}})</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+              <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              <li><a data-action="close"><i class="ft-x"></i></a></li>
+            </ul>
+          </div>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-success mb-2" style="margin-top: 10px; margin-bottom: 0px;">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+          {% endwith %}
+        </div>
+        <div class="card-content collpase show">
+          <div class="card-body">
+          <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item">
+              <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" aria-controls="active"
+              aria-expanded="true">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" aria-controls="medical"
+              aria-expanded="false">Medical History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="dental-tab" data-toggle="tab" href="#dental" aria-controls="dental"
+              aria-expanded="false">Dental History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="medications-tab" data-toggle="tab" href="#medications" aria-controls="medications">Medications</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="insurance-tab" data-toggle="tab" href="#insurance" aria-controls="insurance"
+              aria-expanded="false">Insurance</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" aria-controls="images">Images</a>
+            </li>
+          </ul>
+
+          <!-- Start Contact Information -->
+          <div class="tab-content px-1 pt-1">
+            <div role="tabpanel" class="tab-pane active in  px-1 pt-1" id="active" aria-labelledby="active-tab" aria-expanded="true">
+            <form class="form form-horizontal" method="POST" action="">
+              {{ form.hidden_tag() }}
+              <div class="form-body">
+                <!-- Customer First Name -->
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="customer-firstname">{{ form.first_name.label }}</label>
+                  <div class="col-md-6">
+                    {{ form.first_name(class="form-control", id="customer-firstname") }}
+                    {% for error in form.first_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              <!-- Customer Middle Initial -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-middleinitial">{{ form.middle_initial.label }}</label>
+                <div class="col-md-6">
+                  {{ form.middle_initial(class="form-control", id="customer-middleinitial", placeholder="Middle Initial") }}
+                  {% for error in form.middle_initial.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Last Name -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-lastname">{{ form.last_name.label }}</label>
+                <div class="col-md-6">
+                  {{ form.last_name(class="form-control", id="customer-lastname", placeholder="Last Name") }}
+                  {% for error in form.last_name.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Email -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-email">{{ form.email.label }}</label>
+                <div class="col-md-6">
+                  {{ form.email(class="form-control", id="customer-email") }}
+                  {% for error in form.email.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Home Phone -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-homephone">{{ form.home_phone.label }}</label>
+                <div class="col-md-6">
+                  {{ form.home_phone(class="form-control phone-inputmask", id="customer-homephone", placeholder="") }}
+                  {% for error in form.home_phone.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Mobile Phone -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-mobilephone">{{ form.mobile_phone.label }}</label>
+                <div class="col-md-6">
+                  {{ form.mobile_phone(class="form-control phone-inputmask", id="customer-mobilephone", placeholder="") }}
+                  {% for error in form.mobile_phone.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Date of Birth -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-dob">{{ form.dob.label }}</label>
+                <div class="col-md-6">
+                  {{ form.dob(class="form-control date-inputmask", id="customer-dob", placeholder="") }}
+                  {% for error in form.dob.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <h4 class="form-section"><i class="icon-eye6"></i> Home Address</h4>
+
+              <!-- Customer Street Address -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-street_address">{{ form.street_address.label }}</label>
+                <div class="col-md-6">
+                  {{ form.street_address(class="form-control", id="customer-street_address", placeholder="Street Address") }}
+                  {% for error in form.street_address.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer Street Address 2 -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-street_address_2">{{ form.street_address_2.label }}</label>
+                <div class="col-md-6">
+                  {{ form.street_address_2(class="form-control", id="customer-street_address_2", placeholder="Street Address 2 (optional)") }}
+                  {% for error in form.street_address_2.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer City -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-city">{{ form.city.label }}</label>
+                <div class="col-md-6">
+                  {{ form.city(class="form-control", id="customer-city", placeholder="City") }}
+                  {% for error in form.city.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer State -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-state">{{ form.state.label }}</label>
+                <div class="col-md-6">
+                  {{ form.state(class="form-control", id="customer-state", placeholder="") }}
+                  {% for error in form.state.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Customer ZIP -->
+              <div class="form-group row">
+                <label class="col-md-2 label-control" for="customer-zipcode">{{ form.zipcode.label }}</label>
+                <div class="col-md-6">
+                  {{ form.zipcode(class="form-control", id="customer-zipcode", placeholder="") }}
+                  {% for error in form.zipcode.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- End Contact Information -->
+
+          <!-- Start Medical History Pane -->
+          <div class="tab-pane form" id="medical" role="tabpanel" aria-labelledby="medical-tab" aria-expanded="false">
+            <h4 class="form-section"><i class="fa fa-weight"></i> Physical Exam</h4>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.gender.label }}</label>
+              <div class="col-md-2">
+                {{ form.gender(class="form-control", id="gender", placeholder="--") }}
+                {% for error in form.gender.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Blood Pressure -->
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.blood_pressure_systolic.label }}</label>
+              <div class="col-md-2">
+                {{ form.blood_pressure_systolic(class="form-control", id="blood_pressure_systolic", placeholder="mm Hg") }}
+                {% for error in form.blood_pressure_systolic.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+              <div class="col-md-2 bold">
+                {{ form.blood_pressure_diastolic.label }}
+              </div>
+              <div class="col-md-2">
+                {{ form.blood_pressure_diastolic(class="form-control", id="blood_pressure_diastolic", placeholder="mm Hg") }}
+                {% for error in form.blood_pressure_diastolic.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.height.label }}</label>
+              <div class="col-md-2">
+                {{ form.height(class="form-control", id="height", placeholder="inches") }}
+                {% for error in form.height.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.weight.label }}</label>
+              <div class="col-md-2">
+                {{ form.weight(class="form-control", id="weight", placeholder="lbs") }}
+                {% for error in form.weight.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.bmi.label }}</label>
+              <div class="col-md-2">
+                {{ form.bmi(class="form-control", id="bmi", placeholder="") }}
+                {% for error in form.bmi.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <h4 class="form-section"><i class="fa fa-weight"></i> History</h4>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">Current Problems</label>
+              <div class="form-group col-6 mb-6 contact-repeater">
+                <div data-repeater-list="repeater-group">
+                  <div class="input-group mb-1" data-repeater-item>
+                    <input type="tel" placeholder="" class="form-control" id="example-tel-input">
+                    <span class="input-group-btn" id="button-addon2">
+                      <button class="btn btn-danger" type="button" data-repeater-delete><i class="ft-x"></i></button>
+                    </span>
+                  </div>
+                </div>
+                <button type="button" data-repeater-create class="btn btn-primary">
+                  <i class="icon-plus4"></i> Add Additional Problem
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.patient_preferences.label }}</label>
+              <div class="col-md-6">
+                {{ form.patient_preferences(class="form-control", id="patient_preferences", placeholder="") }}
+                {% for error in form.patient_preferences.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.patient_consents.label }}</label>
+              <div class="col-md-6">
+                {{ form.patient_consents(class="form-control", id="patient_consents", placeholder="") }}
+                {% for error in form.patient_consents.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.family_history.label }}</label>
+              <div class="col-md-6">
+                {{ form.family_history(class="form-control", id="family_history", placeholder="") }}
+                {% for error in form.family_history.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+
+          </div>
+          <!-- End Medical Tab Pane -->
+
+          <div class="tab-pane" id="dental" role="tabpanel" aria-labelledby="dental-tab" aria-expanded="false">
+            <!-- Customer First Name -->
+            <div class="form-group row px-1 pt-1">
+              <div class="col-md-12">
+                <img class="img-fluid" src="/static/images/underconstruction.png" />
+              </div>
+            </div>
+
+          </div>
+          <!-- End Dental Tab Pane -->
+
+          <!-- Start Medications Tab Pane -->
+          <div class="tab-pane" id="medications" role="tabpanel" aria-labelledby="medications-tab" aria-expanded="false">
+
+            <div class="repeater-default">
+              <div data-repeater-list="car">
+                <div data-repeater-item>
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name(class="form-control", id="medication_name", placeholder="Medication / Suppliment Name") }}
+                    {% for error in form.medication_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose(class="form-control", id="medication_dose", placeholder="Dose (mg)") }}
+                    {% for error in form.medication_dose.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq(class="form-control", id="medication_freq") }}
+                    {% for error in form.medication_freq.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" data-repeater-delete="" class="btn btn-icon btn-danger mr-1"><i class="ft-x"></i></button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group overflow-hidden">
+              <div class="col-12">
+                <button type="button" class="btn btn-primary" data-repeater-create> Add Medication</button>
+              </div>
+            </div>
+          </div>
+
+
+          </div>
+          <!-- End Medications Tab Pane -->
+
+          <!-- Start Insurance Tab Pane -->
+          <div class="tab-pane" id="insurance" role="tabpanel" aria-labelledby="insurance-tab" aria-expanded="false">
+            <div class="form-group row px-1 pt-1">
+              <div class="col-md-12">
+                <img class="img-fluid" src="/static/images/underconstruction.png" />
+              </div>
+            </div>
+          </div>
+          <!-- End Insurance Tab Pane -->
+
+
+        </form> <!-- Close the form so the image uploads will work -->
+
+          <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="images-tab" aria-expanded="false">
+            <div class="form-group row px-1 pt-1">
+              <div class="col-md-12">
+              <h4 class="form-section"><i class="fa fa-image"></i> Diagnostic Images</h4>
+              <form action="#" class="dropzone dropzone-area" id="diagnostic-images">
+                <div class="dz-message">Drop Files Here To Upload</div>
+              </form>
+            </div>
+            </div>
+
+
+            <div class="form-group row px-1 pt-1">
+            <div class="col-md-12">
+            <h4 class="form-section"><i class="fa fa-x-ray"></i> Dental X-Rays</h4>
+            <form action="#" class="dropzone dropzone-area" id="dental-images">
+              <div class="dz-message">Drop Files Here To Upload</div>
+            </form>
+          </div>
+            </div>
+
+            <script src="{{ url_for('static',filename='vendors/js/extensions/dropzone.min.js') }}" type="text/javascript"></script>
+            <script type="text/javascript">
+            Dropzone.options.dpzMultipleFiles = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 0.5, // MB
+                clickable: true
+            }
+            </script>
+            </div>
+
+
+
+              <!-- Form Actions -->
+              <div class="form-actions right px-1 pt-1" style="text-align: right;">
+                <a href="/customers"><button type="button" class="btn btn-warning mr-1">
+                  <i class="ft-x"></i> Cancel
+                </button></a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-check-square-o"></i> Save
+                </button>
+              </div>
+
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+
+
+
+      </div> <!-- END card -->
+    </div> <!-- END card wrapper -->
+  </div>
+</div>
+
+{% endblock %}
