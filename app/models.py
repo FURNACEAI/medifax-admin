@@ -10,8 +10,39 @@ class Customer():
     user_id = ''
     first_name = ''
 
-    def edit(self, form):
-        return True
+    def edit(self, form, rform):
+        print(form)
+        payload = {
+            "first_name": form.first_name.data,
+            "middle_initial": form.middle_initial.data,
+            "last_name": form.last_name.data,
+            "email": form.email.data,
+            "home_phone": form.home_phone.data,
+            "mobile_phone": form.mobile_phone.data,
+            "street_address": form.street_address.data,
+            "street_address_2": form.street_address_2.data,
+            "city": form.city.data,
+            "state": form.state.data,
+            "zipcode": form.zipcode.data,
+            "dob": form.dob.data
+        }
+        url = "%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['update'])
+        payload = json.dumps(payload)
+        r = requests.post(url, headers=self.headers, data=payload)
+        req = r.json()
+        if req['message'] == 'Success':
+            self.id = req['id']
+            return True
+        else:
+            return False
+
+
+
+
+        #for x in form:
+        #    print(x.name)
+        #print("MED: %s " % form.medication_name.data)
+        #print("Blood Pressure: %s " % form.blood_pressure_systolic.data)
 
 
     def create(self, form):
@@ -28,7 +59,8 @@ class Customer():
             "city": form.city.data,
             "state": form.state.data,
             "zipcode": form.zipcode.data,
-            "dob": form.dob.data
+            "dob": form.dob.data,
+            "gender": form.gender.data
         }
         url = "%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['add'])
         payload = json.dumps(payload)
@@ -94,7 +126,6 @@ class User(UserMixin):
 @login.user_loader
 def load_user(id):
     user = User()
-    # return User.get(id)
     u = user.load(id)
     session['user_first_name'] = u.first_name
     session['user_id'] = u.user_id

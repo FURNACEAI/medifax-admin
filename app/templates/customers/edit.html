@@ -54,6 +54,10 @@
               aria-expanded="true">Contact</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="sub-tab" data-toggle="tab" href="#sub" aria-controls="sub"
+              aria-expanded="false">Subscription</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" aria-controls="medical"
               aria-expanded="false">Medical History</a>
             </li>
@@ -76,7 +80,7 @@
           <!-- Start Contact Information -->
           <div class="tab-content px-1 pt-1">
             <div role="tabpanel" class="tab-pane active in  px-1 pt-1" id="active" aria-labelledby="active-tab" aria-expanded="true">
-            <form class="form form-horizontal" method="POST" action="">
+            <form class="form form-horizontal" method="POST" id="customer-edit" name="customer-edit" action="">
               {{ form.hidden_tag() }}
               <div class="form-body">
                 <!-- Customer First Name -->
@@ -217,6 +221,24 @@
           </div>
           <!-- End Contact Information -->
 
+          <!-- Start Subscription Pane -->
+          <div class="tab-pane" id="sub" role="tabpanel" aria-labelledby="sub-tab" aria-expanded="false">
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.active.label }}</label>
+              <div class="col-md-2">
+                {{ form.active(class="form-control", id="sub-active", placeholder="") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.status.label }}</label>
+              <div class="col-md-4">
+                {{ form.status(class="form-control", id="sub-status", placeholder="") }}
+              </div>
+            </div>
+          </div>
+          <!-- End Subscription Tab Pane -->
+
           <!-- Start Medical History Pane -->
           <div class="tab-pane form" id="medical" role="tabpanel" aria-labelledby="medical-tab" aria-expanded="false">
             <h4 class="form-section"><i class="fa fa-weight"></i> Physical Exam</h4>
@@ -281,20 +303,11 @@
             </div>
 
             <h4 class="form-section"><i class="fa fa-weight"></i> History</h4>
+
             <div class="form-group row px-1 pt-1">
-              <label class="col-md-2 label-control" for="bmi">Current Problems</label>
-              <div class="form-group col-6 mb-6 contact-repeater">
-                <div data-repeater-list="repeater-group">
-                  <div class="input-group mb-1" data-repeater-item>
-                    <input type="tel" placeholder="" class="form-control" id="example-tel-input">
-                    <span class="input-group-btn" id="button-addon2">
-                      <button class="btn btn-danger" type="button" data-repeater-delete><i class="ft-x"></i></button>
-                    </span>
-                  </div>
-                </div>
-                <button type="button" data-repeater-create class="btn btn-primary">
-                  <i class="icon-plus4"></i> Add Additional Problem
-                </button>
+              <label class="col-md-2 label-control" for="bmi">{{ form.allergies.label }}</label>
+              <div class="col-md-6">
+                {{ form.allergies(class="form-control", id="allergies", placeholder="") }}
               </div>
             </div>
 
@@ -302,9 +315,6 @@
               <label class="col-md-2 label-control" for="bmi">{{ form.patient_preferences.label }}</label>
               <div class="col-md-6">
                 {{ form.patient_preferences(class="form-control", id="patient_preferences", placeholder="") }}
-                {% for error in form.patient_preferences.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
               </div>
             </div>
 
@@ -312,9 +322,6 @@
               <label class="col-md-2 label-control" for="bmi">{{ form.patient_consents.label }}</label>
               <div class="col-md-6">
                 {{ form.patient_consents(class="form-control", id="patient_consents", placeholder="") }}
-                {% for error in form.patient_consents.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
               </div>
             </div>
 
@@ -322,75 +329,207 @@
               <label class="col-md-2 label-control" for="bmi">{{ form.family_history.label }}</label>
               <div class="col-md-6">
                 {{ form.family_history(class="form-control", id="family_history", placeholder="") }}
-                {% for error in form.family_history.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
               </div>
             </div>
 
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.lifestyle_history.label }}</label>
+              <div class="col-md-6">
+                {{ form.lifestyle_history(class="form-control", id="lifestyle_history", placeholder="") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.social_history.label }}</label>
+              <div class="col-md-6">
+                {{ form.social_history(class="form-control", id="social_history", placeholder="") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.care_plan.label }}</label>
+              <div class="col-md-6">
+                {{ form.care_plan(class="form-control", id="care_plan", placeholder="") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.lab_results.label }}</label>
+              <div class="col-md-6">
+                {{ form.lab_results(class="form-control", id="lab_results", placeholder="") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.referrals.label }}</label>
+              <div class="col-md-6">
+                {{ form.referrals(class="form-control", id="referrals", placeholder="") }}
+              </div>
+            </div>
+
+            {% for child in form.current_problems %}
+            <div class="form-group row px-1 pt-1">
+                <label class="col-md-2 label-control">
+                  {% if loop.index == 1 %}
+                    {{ form.current_problems.label }}
+                  {% else %}
+                    &nbsp;
+                  {% endif %}
+                </label>
+                <div class="col-md-6">
+                  {{ child(class="form-control", placeholder="Current Medical Condition") }}
+                </div>
+            </div>
+            {% endfor %}
 
           </div>
           <!-- End Medical Tab Pane -->
 
           <div class="tab-pane" id="dental" role="tabpanel" aria-labelledby="dental-tab" aria-expanded="false">
-            <!-- Customer First Name -->
+            <h4 class="form-section"><i class="fa fa-user-md"></i> Dental Provider</h4>
             <div class="form-group row px-1 pt-1">
-              <div class="col-md-12">
-                <img class="img-fluid" src="/static/images/underconstruction.png" />
+              <div class="col-md-8">
+                {{ form.dentist_name(class="form-control", id="dentist_name", placeholder="Dentist's Name") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <div class="col-md-4">
+                {{ form.dentist_phone(class="form-control", id="dentist_phone", placeholder="Dentist's Phone") }}
+              </div>
+              <div class="col-md-4">
+                {{ form.dentist_email(class="form-control", id="dentist_email", placeholder="Dentist's Email") }}
               </div>
             </div>
 
+            <h4 class="form-section">Dental History</h4>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.dental_condition.label }}</label>
+              <div class="col-md-6">
+                {{ form.dental_condition(class="form-control", id="dental_condition", placeholder="") }}
+              </div>
+            </div>
           </div>
           <!-- End Dental Tab Pane -->
 
           <!-- Start Medications Tab Pane -->
           <div class="tab-pane" id="medications" role="tabpanel" aria-labelledby="medications-tab" aria-expanded="false">
 
-            <div class="repeater-default">
-              <div data-repeater-list="car">
-                <div data-repeater-item>
+                {% for mname in form.medication_name %}
                 <div class="form-group row px-1 pt-1">
                   <div class="col-md-4">
-                    {{ form.medication_name(class="form-control", id="medication_name", placeholder="Medication / Suppliment Name") }}
-                    {% for error in form.medication_name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                    {{ mname(class="form-control", placeholder="Medication / Suppliment Name") }}
                   </div>
                   <div class="col-md-2">
-                    {{ form.medication_dose(class="form-control", id="medication_dose", placeholder="Dose (mg)") }}
-                    {% for error in form.medication_dose.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                    {{ form.medication_dose[loop.index-1](class="form-control", placeholder="Dosage in Mg") }}
                   </div>
                   <div class="col-md-2">
-                    {{ form.medication_freq(class="form-control", id="medication_freq") }}
-                    {% for error in form.medication_freq.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" data-repeater-delete="" class="btn btn-icon btn-danger mr-1"><i class="ft-x"></i></button>
+                    {{ form.medication_freq[loop.index-1](class="form-control", placeholder="x / Day") }}
                   </div>
                 </div>
-
-              </div>
-            </div>
-            <div class="form-group overflow-hidden">
-              <div class="col-12">
-                <button type="button" class="btn btn-primary" data-repeater-create> Add Medication</button>
-              </div>
-            </div>
-          </div>
-
+                {% endfor %}
 
           </div>
           <!-- End Medications Tab Pane -->
 
           <!-- Start Insurance Tab Pane -->
           <div class="tab-pane" id="insurance" role="tabpanel" aria-labelledby="insurance-tab" aria-expanded="false">
+            <h4 class="form-section">Medical Insurance</h4>
             <div class="form-group row px-1 pt-1">
-              <div class="col-md-12">
-                <img class="img-fluid" src="/static/images/underconstruction.png" />
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_provider_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_provider_med(class="form-control", id="ins_provider_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_planid_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_planid_med(class="form-control", id="ins_planid_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_street_addr_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_street_addr_med(class="form-control", id="ins_street_addr_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_city_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_city_med(class="form-control", id="ins_city_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_state_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_state_med(class="form-control", id="ins_state_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_zipcode_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_zipcode_med(class="form-control", id="ins_zipcode_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_phone_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_phone_med(class="form-control", id="ins_phone_med", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_email_med.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_email_med(class="form-control", id="ins_email_med", placeholder="") }}
+              </div>
+            </div>
+
+            <h4 class="form-section">Dental Insurance</h4>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_provider_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_provider_dental(class="form-control", id="ins_provider_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_planid_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_planid_dental(class="form-control", id="ins_planid_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_street_addr_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_street_addr_dental(class="form-control", id="ins_street_addr_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_city_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_city_dental(class="form-control", id="ins_city_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_state_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_state_dental(class="form-control", id="ins_state_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_zipcode_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_zipcode_dental(class="form-control", id="ins_zipcode_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_phone_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_phone_dental(class="form-control", id="ins_phone_dental", placeholder="") }}
+              </div>
+            </div>
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.ins_email_dental.label }}</label>
+              <div class="col-md-6">
+                {{ form.ins_email_dental(class="form-control", id="ins_email_dental", placeholder="") }}
               </div>
             </div>
           </div>
@@ -399,6 +538,7 @@
 
         </form> <!-- Close the form so the image uploads will work -->
 
+        <!-- Start Images Tab Pane -->
           <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="images-tab" aria-expanded="false">
             <div class="form-group row px-1 pt-1">
               <div class="col-md-12">
@@ -408,16 +548,8 @@
               </form>
             </div>
             </div>
-
-
-            <div class="form-group row px-1 pt-1">
-            <div class="col-md-12">
-            <h4 class="form-section"><i class="fa fa-x-ray"></i> Dental X-Rays</h4>
-            <form action="#" class="dropzone dropzone-area" id="dental-images">
-              <div class="dz-message">Drop Files Here To Upload</div>
-            </form>
-          </div>
-            </div>
+        </div>
+        <!-- End Images Tab Pane -->
 
             <script src="{{ url_for('static',filename='vendors/js/extensions/dropzone.min.js') }}" type="text/javascript"></script>
             <script type="text/javascript">
@@ -436,7 +568,7 @@
                 <a href="/customers"><button type="button" class="btn btn-warning mr-1">
                   <i class="ft-x"></i> Cancel
                 </button></a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" onclick="document.getElementById('customer-edit').submit();">
                   <i class="fa fa-check-square-o"></i> Save
                 </button>
               </div>

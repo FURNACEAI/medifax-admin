@@ -8,6 +8,14 @@ from app import application
 from app.models import User, Customer
 from app.forms import LoginForm, AddEmployeeForm, CreateCustomerForm, EditCustomerForm
 
+@application.template_global(name='zip')
+def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
+    return common_entries(*args)
+
+def common_entries(*dcts):
+    for i in set(dcts[0]).intersection(*dcts[1:]):
+        yield (i,) + tuple(d[i] for d in dcts)
+
 @application.template_filter('ctime')
 def timectime(s):
     """ Formats a Python timestamp to a human-readable format """
@@ -110,9 +118,9 @@ def edit_customer(user_id):
     form = EditCustomerForm()
     if form.validate_on_submit():
         user = Customer()
-        update = user.edit(form)
+        update = user.edit(form, request.form)
         if update:
-            flash("Customer Record Updated")
+            flash('Customer Record Updated')
         else:
             flash('Customer record update failed.')
 
@@ -137,6 +145,12 @@ def edit_customer(user_id):
     form.state.data = data['home_address']['state']
     form.zipcode.data = data['home_address']['zipcode']
 
+    form.gender.data = data['gender']
+    form.height.data = data['height']
+    form.weight.data = data['weight']
+
+    form.blood_pressure_systolic.data = data['blood_pressure_systolic']
+    form.blood_pressure_diastolic.data = data['blood_pressure_diastolic']
 
     return render_template('customers/edit.html', title='Customer Record | Medifax', form=form, data=data)
 
@@ -169,11 +183,18 @@ def delete_customer(user_id):
     flash('The customer record was deleted.')
     return redirect(url_for('list_customers'))
 
+@application.route('/dashboard')
+def dashboard():
+    if current_user.is_authenticated:
+        return render_template('dashboard.html', title='Medifax Dashboard')
+    else:
+        return redirect(url_for('login'))
 
 @application.route('/')
 @application.route('/index')
 def index():
     if current_user.is_authenticated:
-        return render_template('dashboard.html', title='Medifax Dashboard')
+        return redirect(url_for('list_customers'))
+        # return render_template('dashboard.html', title='Medifax Dashboard')
     else:
         return redirect(url_for('login'))
