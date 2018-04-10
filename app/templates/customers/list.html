@@ -71,8 +71,6 @@
                     <td>{{ block['created_on'] | ctime }}</td>
                     <td>{{ block['active'] }}</td>
                     <td>
-                      <a href="/customers/view/{{ block['id'] }}"><button type="button" class="btn btn-icon btn-info mr-1"><i class="fa fa-eye"></i></button></a>
-
                       <a href="/customers/edit/{{ block['id'] }}" title="Edit Employee"><button type="button" class="btn btn-icon btn-primary mr-1"><i class="fa fa-edit"></i></button></a>
 
                       <a href="/customers/delete/{{ block['id'] }}" title="Delete Employee"><button type="button" class="btn btn-icon btn-danger mr-1"><i class="fa fa-minus-circle"></i></button></a>

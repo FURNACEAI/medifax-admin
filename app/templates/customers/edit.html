@@ -82,6 +82,7 @@
             <div role="tabpanel" class="tab-pane active in  px-1 pt-1" id="active" aria-labelledby="active-tab" aria-expanded="true">
             <form class="form form-horizontal" method="POST" id="customer-edit" name="customer-edit" action="">
               {{ form.hidden_tag() }}
+              {{ form.user_id() }}
               <div class="form-body">
                 <!-- Customer First Name -->
                 <div class="form-group row">
@@ -224,6 +225,13 @@
           <!-- Start Subscription Pane -->
           <div class="tab-pane" id="sub" role="tabpanel" aria-labelledby="sub-tab" aria-expanded="false">
             <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">Access Code</label>
+              <div class="col-md-2">
+                {{ access_code }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
               <label class="col-md-2 label-control" for="customer-firstname">{{ form.active.label }}</label>
               <div class="col-md-2">
                 {{ form.active(class="form-control", id="sub-active", placeholder="") }}
@@ -273,6 +281,13 @@
             </div>
 
             <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="customer-firstname">{{ form.blood_type.label }}</label>
+              <div class="col-md-2">
+                {{ form.blood_type(class="form-control", id="height", placeholder="inches") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
               <label class="col-md-2 label-control" for="customer-firstname">{{ form.height.label }}</label>
               <div class="col-md-2">
                 {{ form.height(class="form-control", id="height", placeholder="inches") }}
@@ -297,6 +312,16 @@
               <div class="col-md-2">
                 {{ form.bmi(class="form-control", id="bmi", placeholder="") }}
                 {% for error in form.bmi.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">{{ form.heart_rate.label }}</label>
+              <div class="col-md-2">
+                {{ form.heart_rate(class="form-control", id="bmi", placeholder="") }}
+                {% for error in form.heart_rate.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
               </div>
@@ -367,20 +392,76 @@
               </div>
             </div>
 
-            {% for child in form.current_problems %}
             <div class="form-group row px-1 pt-1">
-                <label class="col-md-2 label-control">
-                  {% if loop.index == 1 %}
-                    {{ form.current_problems.label }}
-                  {% else %}
-                    &nbsp;
-                  {% endif %}
-                </label>
-                <div class="col-md-6">
-                  {{ child(class="form-control", placeholder="Current Medical Condition") }}
-                </div>
+              <label class="col-md-2 label-control" for="bmi">{{ form.current_problems_0.label }}</label>
+              <div class="col-md-6">
+                {{ form.current_problems_0(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
             </div>
-            {% endfor %}
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_1(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_2(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_3(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_4(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_5(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_6(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_7(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_8(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              <label class="col-md-2 label-control" for="bmi">&nbsp;</label>
+              <div class="col-md-6">
+                {{ form.current_problems_9(class="form-control", id="referrals", placeholder="Current Medical Condition") }}
+              </div>
+            </div>
+
 
           </div>
           <!-- End Medical Tab Pane -->
@@ -405,7 +486,7 @@
             <div class="form-group row px-1 pt-1">
               <label class="col-md-2 label-control" for="bmi">{{ form.dental_condition.label }}</label>
               <div class="col-md-6">
-                {{ form.dental_condition(class="form-control", id="dental_condition", placeholder="") }}
+                {{ form.dental_condition(class="form-control", id="", placeholder="") }}
               </div>
             </div>
           </div>
@@ -413,20 +494,126 @@
 
           <!-- Start Medications Tab Pane -->
           <div class="tab-pane" id="medications" role="tabpanel" aria-labelledby="medications-tab" aria-expanded="false">
-
-                {% for mname in form.medication_name %}
+              <h4 class="form-section">Current Medications</h4>
                 <div class="form-group row px-1 pt-1">
                   <div class="col-md-4">
-                    {{ mname(class="form-control", placeholder="Medication / Suppliment Name") }}
+                    {{ form.medication_name_0(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
                   </div>
                   <div class="col-md-2">
-                    {{ form.medication_dose[loop.index-1](class="form-control", placeholder="Dosage in Mg") }}
+                    {{ form.medication_dose_0(class="form-control", placeholder="Dosage in Mg") }}
                   </div>
                   <div class="col-md-2">
-                    {{ form.medication_freq[loop.index-1](class="form-control", placeholder="x / Day") }}
+                    {{ form.medication_freq_0(class="form-control", placeholder="x / Day") }}
                   </div>
                 </div>
-                {% endfor %}
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_1(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_1(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_1(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_2(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_2(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_2(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_3(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_3(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_3(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_4(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_4(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_4(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_5(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_5(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_5(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_6(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_6(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_6(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_7(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_7(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_7(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_8(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_8(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_8(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
+
+                <div class="form-group row px-1 pt-1">
+                  <div class="col-md-4">
+                    {{ form.medication_name_9(class="form-control", id="", placeholder="Medication / Suppliment Name") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_dose_9(class="form-control", placeholder="Dosage in Mg") }}
+                  </div>
+                  <div class="col-md-2">
+                    {{ form.medication_freq_9(class="form-control", placeholder="x / Day") }}
+                  </div>
+                </div>
 
           </div>
           <!-- End Medications Tab Pane -->
@@ -543,7 +730,7 @@
             <div class="form-group row px-1 pt-1">
               <div class="col-md-12">
               <h4 class="form-section"><i class="fa fa-image"></i> Diagnostic Images</h4>
-              <form action="#" class="dropzone dropzone-area" id="diagnostic-images">
+              <form action="/images/upload" class="dropzone dropzone-area" id="diagnostic-images">
                 <div class="dz-message">Drop Files Here To Upload</div>
               </form>
             </div>

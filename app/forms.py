@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, FieldList
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, FieldList, HiddenField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -10,6 +10,7 @@ STATE_ABBREV = [('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', '
                 ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virgina'), ('WA', 'Washington'), ('WV', 'West Virgina'), ('WI', 'Wisconsin'), ('WY', 'Wyoming')]
 
 GENDER = [('', "Select a Gender"), ('Male', 'Male'), ('Female', 'Female')]
+BLOOD_TYPE = [('', "Select a Blood Type"), ('O+', 'O+'), ('O-', 'O-'), ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'), ('AB+', 'AB+'), ('AB-', 'AB-')]
 
 SUB_STATUS = [('Awaiting HIPAA Consent', 'Awaiting HIPAA Consent'), ('HIPAA Consent Received', 'HIPAA Consent Received')]
 
@@ -51,6 +52,7 @@ class CreateCustomerForm(FlaskForm):
     submit = SubmitField('Create Customer')
 
 class EditCustomerForm(CreateCustomerForm):
+    user_id = HiddenField('User ID')
     # Physical Exam
     blood_pressure_systolic = StringField('Blood Pressure Systolic')
     blood_pressure_diastolic = StringField('Blood Pressure Diastolic')
@@ -58,17 +60,58 @@ class EditCustomerForm(CreateCustomerForm):
     height = StringField('Height')
     weight = StringField('Weight')
     bmi = StringField('BMI')
+    access_code = StringField('Access Code')
 
     # Medications
-    medication_name = FieldList(StringField('Medication Name'), min_entries=10, max_entries=10)
-    medication_dose = FieldList(StringField('Medication Dosage'), min_entries=10, max_entries=10)
-    medication_freq = FieldList(StringField('Medication Frequency'), min_entries=10, max_entries=10)
+    medication_name_0 = StringField('Medication Name')
+    medication_name_1 = StringField('Medication Name')
+    medication_name_2 = StringField('Medication Name')
+    medication_name_3 = StringField('Medication Name')
+    medication_name_4 = StringField('Medication Name')
+    medication_name_5 = StringField('Medication Name')
+    medication_name_6 = StringField('Medication Name')
+    medication_name_7 = StringField('Medication Name')
+    medication_name_8 = StringField('Medication Name')
+    medication_name_9 = StringField('Medication Name')
+
+    medication_dose_0 = StringField('Medication Dosage')
+    medication_dose_1 = StringField('Medication Dosage')
+    medication_dose_2 = StringField('Medication Dosage')
+    medication_dose_3 = StringField('Medication Dosage')
+    medication_dose_4 = StringField('Medication Dosage')
+    medication_dose_5 = StringField('Medication Dosage')
+    medication_dose_6 = StringField('Medication Dosage')
+    medication_dose_7 = StringField('Medication Dosage')
+    medication_dose_8 = StringField('Medication Dosage')
+    medication_dose_9 = StringField('Medication Dosage')
+
+    medication_freq_0 = StringField('Medication Frequency')
+    medication_freq_1 = StringField('Medication Frequency')
+    medication_freq_2 = StringField('Medication Frequency')
+    medication_freq_3 = StringField('Medication Frequency')
+    medication_freq_4 = StringField('Medication Frequency')
+    medication_freq_5 = StringField('Medication Frequency')
+    medication_freq_6 = StringField('Medication Frequency')
+    medication_freq_7 = StringField('Medication Frequency')
+    medication_freq_8 = StringField('Medication Frequency')
+    medication_freq_9 = StringField('Medication Frequency')
 
     # Medical / Lifestyle History
-    current_problems = FieldList(StringField('Current Problems'), min_entries=10, max_entries=10)
+    current_problems_0 = StringField('Current Problems')
+    current_problems_1 = StringField('Current Problems')
+    current_problems_2 = StringField('Current Problems')
+    current_problems_3 = StringField('Current Problems')
+    current_problems_4 = StringField('Current Problems')
+    current_problems_5 = StringField('Current Problems')
+    current_problems_6 = StringField('Current Problems')
+    current_problems_7 = StringField('Current Problems')
+    current_problems_8 = StringField('Current Problems')
+    current_problems_9 = StringField('Current Problems')
+
     gender = SelectField('Gender', choices=GENDER)
+    blood_type = SelectField('Blood Type', choices=BLOOD_TYPE)
     patient_preferences = TextAreaField('Patient Preferences')
-    patient_consents = TextAreaField('Patient Consents')
+    patient_consents = TextAreaField('Emergency Contact')
     family_history = TextAreaField('Family History')
     lifestyle_history = TextAreaField('Lifestyle')
     social_history = TextAreaField('Social History')

@@ -21,6 +21,11 @@ def timectime(s):
     """ Formats a Python timestamp to a human-readable format """
     return datetime.datetime.fromtimestamp(s).strftime('%m/%d/%Y')
 
+@application.template_filter('lbreak')
+def timectime(s):
+    """ Formats a Python timestamp to a human-readable format """
+    return "<br />".join(s.split("\n"))
+
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
@@ -119,6 +124,7 @@ def edit_customer(user_id):
     if form.validate_on_submit():
         user = Customer()
         update = user.edit(form, request.form)
+        print(update)
         if update:
             flash('Customer Record Updated')
         else:
@@ -130,10 +136,12 @@ def edit_customer(user_id):
     data = r.json()
 
     # Load the form data
+    form.user_id.data = user_id
     form.first_name.data = data['name']['first']
     form.middle_initial.data = data['name']['middle_initial']
     form.last_name.data = data['name']['last']
     form.dob.data = data['dob']
+    form.access_code.data = data['access_code']
 
     form.home_phone.data = data['phone']['home']
     form.mobile_phone.data = data['phone']['mobile']
@@ -148,11 +156,94 @@ def edit_customer(user_id):
     form.gender.data = data['gender']
     form.height.data = data['height']
     form.weight.data = data['weight']
+    form.heart_rate.data = data['heart_rate']
+    form.bmi.data = data['bmi']
 
     form.blood_pressure_systolic.data = data['blood_pressure_systolic']
     form.blood_pressure_diastolic.data = data['blood_pressure_diastolic']
 
-    return render_template('customers/edit.html', title='Customer Record | Medifax', form=form, data=data)
+    form.patient_preferences.data = data['patient_preferences']
+    form.patient_consents.data = data['patient_consents']
+    form.family_history.data = data['family_history']
+    form.allergies.data = data['allergies']
+    form.referrals.data = data['referrals']
+    form.lab_results.data = data['lab_results']
+    form.care_plan.data = data['care_plan']
+    form.lifestyle_history.data = data['lifestyle_history']
+    form.social_history.data = data['social_history']
+
+    form.current_problems_0.data = data['current_problems_0']
+    form.current_problems_1.data = data['current_problems_1']
+    form.current_problems_2.data = data['current_problems_2']
+    form.current_problems_3.data = data['current_problems_3']
+    form.current_problems_4.data = data['current_problems_4']
+    form.current_problems_5.data = data['current_problems_5']
+    form.current_problems_6.data = data['current_problems_6']
+    form.current_problems_7.data = data['current_problems_7']
+    form.current_problems_8.data = data['current_problems_8']
+    form.current_problems_9.data = data['current_problems_9']
+
+    form.medication_name_0.data = data['medication_name_0']
+    form.medication_name_1.data = data['medication_name_1']
+    form.medication_name_2.data = data['medication_name_2']
+    form.medication_name_3.data = data['medication_name_3']
+    form.medication_name_4.data = data['medication_name_4']
+    form.medication_name_5.data = data['medication_name_5']
+    form.medication_name_6.data = data['medication_name_6']
+    form.medication_name_7.data = data['medication_name_7']
+    form.medication_name_8.data = data['medication_name_8']
+    form.medication_name_9.data = data['medication_name_9']
+
+    form.medication_dose_0.data = data['medication_dose_0']
+    form.medication_dose_1.data = data['medication_dose_1']
+    form.medication_dose_2.data = data['medication_dose_2']
+    form.medication_dose_3.data = data['medication_dose_3']
+    form.medication_dose_4.data = data['medication_dose_4']
+    form.medication_dose_5.data = data['medication_dose_5']
+    form.medication_dose_6.data = data['medication_dose_6']
+    form.medication_dose_7.data = data['medication_dose_7']
+    form.medication_dose_8.data = data['medication_dose_8']
+    form.medication_dose_9.data = data['medication_dose_9']
+
+    form.medication_freq_0.data = data['medication_freq_0']
+    form.medication_freq_1.data = data['medication_freq_1']
+    form.medication_freq_2.data = data['medication_freq_2']
+    form.medication_freq_3.data = data['medication_freq_3']
+    form.medication_freq_4.data = data['medication_freq_4']
+    form.medication_freq_5.data = data['medication_freq_5']
+    form.medication_freq_6.data = data['medication_freq_6']
+    form.medication_freq_7.data = data['medication_freq_7']
+    form.medication_freq_8.data = data['medication_freq_8']
+    form.medication_freq_9.data = data['medication_freq_9']
+
+    # Dental
+    form.dentist_name.data = data['dentist_name']
+    form.dentist_email.data = data['dentist_email']
+    form.dentist_phone.data = data['dentist_phone']
+    form.dental_condition.data = data['dental_condition']
+
+    # Dental Insurance
+    form.ins_planid_dental.data = data['ins_planid_dental']
+    form.ins_provider_dental.data = data['ins_provider_dental']
+    form.ins_street_addr_dental.data = data['ins_street_addr_dental']
+    form.ins_city_dental.data = data['ins_city_dental']
+    form.ins_state_dental.data = data['ins_state_dental']
+    form.ins_zipcode_dental.data = data['ins_zipcode_dental']
+    form.ins_phone_dental.data = data['ins_phone_dental']
+    form.ins_email_dental.data = data['ins_email_dental']
+
+    # Medical Insurance
+    form.ins_planid_med.data = data['ins_planid_med']
+    form.ins_provider_med.data = data['ins_provider_med']
+    form.ins_street_addr_med.data = data['ins_street_addr_med']
+    form.ins_city_med.data = data['ins_city_med']
+    form.ins_state_med.data = data['ins_state_med']
+    form.ins_zipcode_med.data = data['ins_zipcode_med']
+    form.ins_phone_med.data = data['ins_phone_med']
+    form.ins_email_med.data = data['ins_email_med']
+
+
+    return render_template('customers/edit.html', access_code=data['access_code'], title='Customer Record | Medifax', form=form, data=data)
 
 """ CUSTOMER > ADD """
 @application.route('/customers/add', methods=['GET', 'POST'])
@@ -165,7 +256,7 @@ def add_customer():
         create = user.create(form)
         if create:
             flash("New customer created with the email: %s" % form.email.data)
-            url = "/customers/view/%s" % user.id
+            url = "/customers"
             return redirect(url)
         else:
             flash('Employee creation failed.')
@@ -182,6 +273,14 @@ def delete_customer(user_id):
     r = requests.delete(url, headers=cfg._AWS['headers'])
     flash('The customer record was deleted.')
     return redirect(url_for('list_customers'))
+
+@application.route('/images/upload')
+def upload():
+    if current_user.is_authenticated:
+        bucket = 'medifax-customers-images-dev'
+    else:
+        return redirect(url_for('login'))
+
 
 @application.route('/dashboard')
 def dashboard():
