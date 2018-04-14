@@ -1,6 +1,7 @@
 import requests
 import datetime
 import os, sys
+import json
 from app import config as cfg
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
@@ -41,7 +42,6 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Medifax Admin Login', form=form)
-
 
 """ LOGOUT """
 @application.route('/logout')
@@ -115,6 +115,33 @@ def view_customer(user_id):
     r = requests.get(url, headers=cfg._AWS['headers'])
     return render_template('customers/view.html', title='Customer Record | Medifax', data=r.json())
 
+""" CUSTOMER > VIEW """
+@application.route('/customers/upload/<user_id>/<img_type>/<img_filename>', methods=['GET', 'POST'])
+def upload_customer(user_id, img_type, img_filename):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    # http://127.0.0.1:5000/customers/upload/c85cf638-3aa0-11e8-8bb4-5e566f9ab6c7/medical/filename.jpg
+
+    # Fetch a one-time URL for S3 upload
+    payload = {
+        "s3key": "%s" % (user_id)
+    }
+    payload = json.dumps(payload)
+    url = "%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['onetimes3url'])
+    r = requests.post(url, data=payload)
+    req = r.json()
+    return req['s3url']
+
+
+    #form = EditCustomerForm() # HACK Upload form should be broken out to it's own form
+    # filename = form.img_file.data.filename
+    # form.img_file.data.save('uploads/' + filename)
+    # On successful upload
+    #return redirect("/customers/edit/%s" % form.user_id.data)
+
+
+
 @application.route('/customers/edit/<user_id>', methods=['GET', 'POST'])
 def edit_customer(user_id):
     if not current_user.is_authenticated:
@@ -124,7 +151,7 @@ def edit_customer(user_id):
     if form.validate_on_submit():
         user = Customer()
         update = user.edit(form, request.form)
-        print(update)
+        # print(update)
         if update:
             flash('Customer Record Updated')
         else:

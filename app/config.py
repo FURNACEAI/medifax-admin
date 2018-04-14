@@ -18,6 +18,7 @@ _AWS = {
         'add': '/customers/create',
         'delete': '/customers/',
         'update': '/customers/update/',
+        'onetimes3url': '/customers/onetimes3url',
         'get': '/customers/',
         'auth': '/customers/auth'
     }

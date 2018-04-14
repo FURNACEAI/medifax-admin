@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, FieldList, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField, SelectField, TextAreaField, FieldList, HiddenField, FileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -11,6 +11,7 @@ STATE_ABBREV = [('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', '
 
 GENDER = [('', "Select a Gender"), ('Male', 'Male'), ('Female', 'Female')]
 BLOOD_TYPE = [('', "Select a Blood Type"), ('O+', 'O+'), ('O-', 'O-'), ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'), ('AB+', 'AB+'), ('AB-', 'AB-')]
+IMG_TYPE = [('medical', 'Medical'), ('dental', 'Dental')]
 
 SUB_STATUS = [('Awaiting HIPAA Consent', 'Awaiting HIPAA Consent'), ('HIPAA Consent Received', 'HIPAA Consent Received')]
 
@@ -150,3 +151,12 @@ class EditCustomerForm(CreateCustomerForm):
     ins_zipcode_med = StringField('ZIP')
     ins_phone_med = StringField('Phone')
     ins_email_med = StringField('Email')
+
+    img_name = StringField('Image Name')
+    img_desc = TextAreaField('Image Description')
+    img_type = SelectField('File Type', choices=IMG_TYPE)
+    img_file = FileField('Image')
+    img_submit = SubmitField('Upload')
+
+    # Actions
+    submit = SubmitField('Create Customer')

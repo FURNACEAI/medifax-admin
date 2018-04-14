@@ -126,7 +126,7 @@
               <div class="form-group row">
                 <label class="col-md-3 label-control" for="customer-dob">{{ form.dob.label }}</label>
                 <div class="col-md-6">
-                  {{ form.dob(class="form-control date-inputmask", id="customer-dob", placeholder="") }}
+                  {{ form.dob(class="form-control", id="customer-dob", placeholder="mm/dd/yyyy") }}
                   {% for error in form.dob.errors %}
                   <span style="color: red;">[{{ error }}]</span>
                   {% endfor %}
