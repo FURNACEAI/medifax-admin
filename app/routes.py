@@ -115,7 +115,7 @@ def view_customer(user_id):
     r = requests.get(url, headers=cfg._AWS['headers'])
     return render_template('customers/view.html', title='Customer Record | Medifax', data=r.json())
 
-""" CUSTOMER > VIEW """
+""" CUSTOMER > UPLOAD """
 @application.route('/customers/upload/<user_id>/<img_type>/<img_filename>', methods=['GET', 'POST'])
 def upload_customer(user_id, img_type, img_filename):
     if not current_user.is_authenticated:
@@ -148,7 +148,7 @@ def edit_customer(user_id):
         return redirect(url_for('login'))
 
     form = EditCustomerForm()
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         user = Customer()
         update = user.edit(form, request.form)
         # print(update)
@@ -156,6 +156,8 @@ def edit_customer(user_id):
             flash('Customer Record Updated')
         else:
             flash('Customer record update failed.')
+
+    print(form.errors)
 
     # Fetch the customer record
     url = "%s%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['get'],user_id)

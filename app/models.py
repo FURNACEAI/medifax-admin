@@ -34,6 +34,7 @@ class Customer():
             "dob": form.dob.data,
             "blood_pressure_systolic": form.blood_pressure_systolic.data,
             "blood_pressure_diastolic": form.blood_pressure_diastolic.data,
+            "blood_type": "",
             "heart_rate": form.heart_rate.data,
             "height": form.height.data,
             "weight": form.weight.data,
@@ -111,12 +112,13 @@ class Customer():
             "ins_email_med": form['ins_email_med'].data,
             "bmi": form.bmi.data
         }
-        # print(payload)
+        print(payload)
         url = "%s%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['update'],form.user_id.data)
         payload = json.dumps(payload)
         r = requests.post(url, headers=self.headers, data=payload)
         print(r)
         req = r.json()
+        print(req)
         # print("MSG: %s")  % req['message']
         if req['message'] == 'Success':
             self.id = req['id']
