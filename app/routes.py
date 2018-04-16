@@ -185,6 +185,7 @@ def edit_customer(user_id):
     form.weight.data = data['weight']
     form.heart_rate.data = data['heart_rate']
     form.bmi.data = data['bmi']
+    # form.blood_type.data = data['blood_type']
 
     form.blood_pressure_systolic.data = data['blood_pressure_systolic']
     form.blood_pressure_diastolic.data = data['blood_pressure_diastolic']

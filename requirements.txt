@@ -1,5 +1,7 @@
-Flask==0.12.2
 requests==2.18.4
+Werkzeug==0.12.2
+Flask==0.12.2
+boto==2.48.0
 flask_login==0.4.1
 flask_wtf==0.14.2
 WTForms==2.1
