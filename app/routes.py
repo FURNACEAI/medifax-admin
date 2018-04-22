@@ -10,9 +10,9 @@ from app.models import User, Customer
 from app.forms import LoginForm, AddEmployeeForm, CreateCustomerForm, EditCustomerForm
 from werkzeug.utils import secure_filename
 import uuid
-
-# Using TinyS3 for file uploads
 import tinys3
+
+
 
 ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
 
