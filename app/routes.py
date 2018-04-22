@@ -8,10 +8,17 @@ from flask_login import current_user, login_user, logout_user
 from app import application
 from app.models import User, Customer
 from app.forms import LoginForm, AddEmployeeForm, CreateCustomerForm, EditCustomerForm
+from werkzeug.utils import secure_filename
+import uuid
 
-@application.template_global(name='zip')
-def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
-    return common_entries(*args)
+# Using TinyS3 for file uploads
+import tinys3
+
+ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def common_entries(*dcts):
     for i in set(dcts[0]).intersection(*dcts[1:]):
@@ -26,7 +33,6 @@ def timectime(s):
 def timectime(s):
     """ Formats a Python timestamp to a human-readable format """
     return "<br />".join(s.split("\n"))
-
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,8 +58,6 @@ def logout():
     logout_user()
     flash('You have been logged out of your session.')
     return redirect(url_for('login'))
-
-
 
 """ EMPLOYEE > DELETE """
 @application.route('/employees/delete/<user_id>', methods=['GET'])
@@ -95,6 +99,7 @@ def list_employees():
     r = requests.get('https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/list', headers=headers)
     return render_template('employees/list.html', title='Employees | Medifax', data=r.json())
 
+
 """ CUSTOMER > LIST """
 @application.route('/customers', methods=['GET'])
 def list_customers():
@@ -115,31 +120,43 @@ def view_customer(user_id):
     r = requests.get(url, headers=cfg._AWS['headers'])
     return render_template('customers/view.html', title='Customer Record | Medifax', data=r.json())
 
-""" CUSTOMER > UPLOAD """
-@application.route('/customers/upload/<user_id>/<img_type>/<img_filename>', methods=['GET', 'POST'])
-def upload_customer(user_id, img_type, img_filename):
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
+""" FILES > UPLOAD """
+@application.route('/upload/', methods=['GET','POST','PUT'])
+def upload_file():
+    # TODO: Add in some error handling
 
-    # http://127.0.0.1:5000/customers/upload/c85cf638-3aa0-11e8-8bb4-5e566f9ab6c7/medical/filename.jpg
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        print('No file part')
+        return "False"
+    file = request.files['file']
 
-    # Fetch a one-time URL for S3 upload
-    payload = {
-        "s3key": "%s" % (user_id)
-    }
-    payload = json.dumps(payload)
-    url = "%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['onetimes3url'])
-    r = requests.post(url, data=payload)
-    req = r.json()
-    return req['s3url']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
 
+        conn = tinys3.Connection('AKIAJP3PFD5RDENKVTQA','r6zjtux80xSALkUEzpfK2qDBESyGwzqFU8OMeXyr',tls=True)
+        local_filepath = os.path.join('app/static/uploads', filename)
+        s3_filename = "%s%s" % (uuid.uuid4(), os.path.splitext(filename)[1].lower())
+        s3_filepath = os.path.join(request.form['user_id'], request.form['image_type'], s3_filename)
+        print(s3_filepath)
 
-    #form = EditCustomerForm() # HACK Upload form should be broken out to it's own form
-    # filename = form.img_file.data.filename
-    # form.img_file.data.save('uploads/' + filename)
-    # On successful upload
-    #return redirect("/customers/edit/%s" % form.user_id.data)
-
+        # Save to disc
+        file.save(local_filepath)
+        # Now open the file and save to S3
+        f = open(local_filepath,'rb')
+        conn.upload(s3_filepath,f,'medifax-images')
+        # Compose a reponse
+        result = {'files': {
+            'file': {
+                'name': filename
+                }
+            }
+        }
+        r = json.dumps(result)
+        # result['name'] = filename
+        return r
+        # return "True"
+    return "False"
 
 
 @application.route('/customers/edit/<user_id>', methods=['GET', 'POST'])
@@ -157,12 +174,14 @@ def edit_customer(user_id):
         else:
             flash('Customer record update failed.')
 
-    print(form.errors)
+    # print(form.errors)
 
     # Fetch the customer record
     url = "%s%s%s%s" % (cfg._AWS['customers']['base'],cfg._AWS['status'],cfg._AWS['customers']['get'],user_id)
     r = requests.get(url, headers=cfg._AWS['headers'])
     data = r.json()
+
+    print(data['blood_type'])
 
     # Load the form data
     form.user_id.data = user_id
@@ -187,7 +206,7 @@ def edit_customer(user_id):
     form.weight.data = data['weight']
     form.heart_rate.data = data['heart_rate']
     form.bmi.data = data['bmi']
-    # form.blood_type.data = data['blood_type']
+    form.blood_type.data = data['blood_type']
 
     form.blood_pressure_systolic.data = data['blood_pressure_systolic']
     form.blood_pressure_diastolic.data = data['blood_pressure_diastolic']

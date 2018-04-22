@@ -284,7 +284,7 @@
             <div class="form-group row px-1 pt-1">
               <label class="col-md-2 label-control" for="customer-firstname"></label>
               <div class="col-md-2">
-
+                {{ form.blood_type(class="form-control", id="blood_type") }}
               </div>
             </div>
 
@@ -463,7 +463,13 @@
               </div>
             </div>
 
-
+            <div class="form-group row px-1 pt-1">
+              {% for image in data.images.medical %}
+                <div class="col-md-3" style="padding: 10px;">
+                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" /></a>
+                </div>
+              {% endfor %}
+            </div>
           </div>
           <!-- End Medical Tab Pane -->
 
@@ -489,6 +495,14 @@
               <div class="col-md-6">
                 {{ form.dental_condition(class="form-control", id="", placeholder="") }}
               </div>
+            </div>
+
+            <div class="form-group row px-1 pt-1">
+              {% for image in data.images.dental %}
+                <div class="col-md-3" style="padding: 10px;">
+                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" /></a>
+                </div>
+              {% endfor %}
             </div>
           </div>
           <!-- End Dental Tab Pane -->
@@ -732,6 +746,26 @@
               <div class="col-md-12">
               <h4 class="form-section"><i class="fa fa-image"></i> Diagnostic Images</h4>
 
+              <div class="form-group row px-1 pt-1">
+                <label class="col-md-2 label-control" for="bmi">Image Type</label>
+                <div class="col-md-3"><select class="form-control" id="image_type" name="img_type" placeholder=""><option value="medical">Medical</option><option value="dental">Dental</option></select></div>
+              </div>
+              <div class="form-group row px-1 pt-1">
+                <div class="col-md-6">
+                  <input id="fileupload" type="file" name="file" data-url="/upload/" class="form-control" multiple>
+                </div>
+              </div>
+
+              <!--
+              <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
+              </div>
+              -->
+              <div class="form-group row px-1 pt-1">
+                <div class="col-md-12">
+                  <div id="files" class="files"></div>
+                </div>
+              </div>
 
 
             </div>
@@ -752,9 +786,6 @@
               </div>
 
             </div>
-
-
-
 
 
           </div>

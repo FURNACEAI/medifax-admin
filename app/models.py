@@ -34,7 +34,7 @@ class Customer():
             "dob": form.dob.data,
             "blood_pressure_systolic": form.blood_pressure_systolic.data,
             "blood_pressure_diastolic": form.blood_pressure_diastolic.data,
-            "blood_type": "",
+            "blood_type": form.blood_type.data,
             "heart_rate": form.heart_rate.data,
             "height": form.height.data,
             "weight": form.weight.data,

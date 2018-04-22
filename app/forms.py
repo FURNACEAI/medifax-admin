@@ -110,7 +110,7 @@ class EditCustomerForm(CreateCustomerForm):
     current_problems_9 = StringField('Current Problems')
 
     gender = SelectField('Gender', choices=GENDER)
-    # blood_type = SelectField('Blood Type', choices=BLOOD_TYPE)
+    blood_type = SelectField('Blood Type', choices=BLOOD_TYPE)
     patient_preferences = TextAreaField('Patient Preferences')
     patient_consents = TextAreaField('Emergency Contact')
     family_history = TextAreaField('Family History')
@@ -152,8 +152,4 @@ class EditCustomerForm(CreateCustomerForm):
     ins_phone_med = StringField('Phone')
     ins_email_med = StringField('Email')
 
-    img_name = StringField('Image Name')
-    img_desc = TextAreaField('Image Description')
-    # img_type = SelectField('File Type', choices=IMG_TYPE)
-    img_file = FileField('Image')
     img_submit = SubmitField('Upload')
