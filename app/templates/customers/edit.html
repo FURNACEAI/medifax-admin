@@ -465,8 +465,8 @@
 
             <div class="form-group row px-1 pt-1">
               {% for image in data.images.medical %}
-                <div class="col-md-3" style="padding: 10px;">
-                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" /></a>
+                <div class="col-md-4" style="padding: 10px;">
+                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" class="img-fluid" /></a>
                 </div>
               {% endfor %}
             </div>
@@ -499,8 +499,8 @@
 
             <div class="form-group row px-1 pt-1">
               {% for image in data.images.dental %}
-                <div class="col-md-3" style="padding: 10px;">
-                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" /></a>
+                <div class="col-md-4" style="padding: 10px;">
+                    <a href="{{ image }}" target="_blank"><img src="{{ image }}" class="img-fluid" /></a>
                 </div>
               {% endfor %}
             </div>
