@@ -13,7 +13,7 @@ GENDER = [('', "Select a Gender"), ('Male', 'Male'), ('Female', 'Female')]
 BLOOD_TYPE = [('', "Select a Blood Type"), ('O+', 'O+'), ('O-', 'O-'), ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'), ('AB+', 'AB+'), ('AB-', 'AB-')]
 IMG_TYPE = [('medical', 'Medical'), ('dental', 'Dental')]
 
-SUB_STATUS = [('Awaiting HIPAA Consent', 'Awaiting HIPAA Consent'), ('HIPAA Consent Received', 'HIPAA Consent Received')]
+SUB_STATUS = [('Awaiting HIPAA Consent', 'Awaiting HIPAA Consent'), ('Contracts Received', 'Contracts Received')]
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
