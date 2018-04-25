@@ -15,6 +15,7 @@ import tinys3
 
 AWS_ACCESS_KEY = 'AKIAJP3PFD5RDENKVTQA'
 AWS_SECRET_KEY = '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'
+AWS_S3_BUCKET = 'medifax-images'
 
 ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
 
@@ -35,7 +36,8 @@ def timectime(s):
 def extract_key(s):
     """ Extracts a key from an S3 URL """
     parse_object = urlparse(s)
-    return parse_object.path
+    path = parse_object.path
+    return path.replace('/%s/' % AWS_S3_BUCKET, '')
 
 @application.template_filter('lbreak')
 def timectime(s):
@@ -128,11 +130,13 @@ def view_customer(user_id):
     r = requests.get(url, headers=cfg._AWS['headers'])
     return render_template('customers/view.html', title='Customer Record | Medifax', data=r.json())
 
-""" FILES > UPLOAD """
-@application.route('/file/delete/', methods=['GET','POST','PUT'])
+""" FILES > DELETE """
+@application.route('/file/delete', methods=['POST'])
 def delete_file():
-
-    return True
+    print(request.form['img_key'])
+    conn = tinys3.Connection(AWS_ACCESS_KEY, AWS_SECRET_KEY, tls=True)
+    conn.delete(request.form['img_key'], AWS_S3_BUCKET)
+    return "True"
 
 """ FILES > UPLOAD """
 @application.route('/upload/', methods=['GET','POST','PUT'])

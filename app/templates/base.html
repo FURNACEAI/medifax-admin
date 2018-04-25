@@ -161,14 +161,11 @@
   <script src="{{ url_for('static',filename='js/jquery.fileupload.js') }}"></script>
   <script>
   $(document).ready(function(){
+    // Image uploader
     $('#fileupload').fileupload({
         dataType: 'json',
         done: function (e, data) {
-            // console.log(data.result.files.file.name)
             $(".files").append( "<p>" + data.result.files.file.name + " was successfully uploaded to the customer's account</p>" );
-            //$.each(data.result.files, function (index, file) {
-            //    $('<p/>').text(file.name).appendTo(document.body);
-            //});
         }
     });
 
@@ -176,8 +173,20 @@
         data.formData = { 'user_id': $('#user_id').val(), 'image_type': $('#image_type').val()};
     });
 
+    $(".delete-file").click(function(event){
+      event.preventDefault();
+      btnid = $(this).attr("id")
+      btnref = $(this)
+      var jqxhr = $.post( "/file/delete", {'img_key': btnid},  function(data) {
+        btnref.parent().fadeOut();
+        // alert('The customer\'s image was deleted.')
+      });
+    });
+
 
   });
+
+
 
 </script>
 
