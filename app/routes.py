@@ -157,12 +157,17 @@ def upload_file():
         s3_filename = "%s%s" % (uuid.uuid4(), os.path.splitext(filename)[1].lower())
         s3_filepath = os.path.join(request.form['user_id'], request.form['image_type'], s3_filename)
         print(s3_filepath)
+        print(request.form['image_date'])
+        print(request.form['image_name'])
 
         # Save to disc
         file.save(local_filepath)
         # Now open the file and save to S3
         f = open(local_filepath,'rb')
-        conn.upload(s3_filepath,f,'medifax-images')
+        up = conn.upload(s3_filepath,f,'medifax-images', headers={
+            'x-amz-meta-imgname': request.form['image_name'],
+            'x-amz-meta-imgdate': request.form['image_date']
+            })
         # Compose a reponse
         result = {'files': {
             'file': {

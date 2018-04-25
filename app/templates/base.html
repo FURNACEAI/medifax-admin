@@ -170,7 +170,10 @@
     });
 
     $('#fileupload').bind('fileuploadsubmit', function (e, data) {
-        data.formData = { 'user_id': $('#user_id').val(), 'image_type': $('#image_type').val()};
+        data.formData = { 'user_id': $('#user_id').val(),
+          'image_type': $('#image_type').val(),
+          'image_name': $('#image_name').val(),
+          'image_date': $('#image_date').val() };
     });
 
     $(".delete-file").click(function(event){

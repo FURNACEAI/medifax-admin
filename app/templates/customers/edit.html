@@ -466,8 +466,8 @@
             <div class="form-group row px-1 pt-1">
               {% for image in data.images.medical %}
                 <div class="col-md-4" style="padding: 10px;">
-                    <center><a href="{{ image }}" target="_blank"><img src="{{ image }}" class="img-fluid" /></a>
-                    <br /><a href="#" class="btn btn-danger delete-file" id="{{ image | extract_key }}" style="margin-top: 5px;">Delete</a></center>
+                    <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
+                    <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
               {% endfor %}
             </div>
@@ -501,7 +501,8 @@
             <div class="form-group row px-1 pt-1" style="text-align: center">
               {% for image in data.images.dental %}
                 <div class="col-md-4" style="padding: 10px; text-align: center;">
-                    <a href="{{ image }}" target="_blank"><img src="{{ image | extract_key }}" class="img-fluid" /></a>
+                  <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
+                  <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
               {% endfor %}
             </div>
@@ -752,8 +753,16 @@
                 <div class="col-md-3"><select class="form-control" id="image_type" name="img_type" placeholder=""><option value="medical">Medical</option><option value="dental">Dental</option></select></div>
               </div>
               <div class="form-group row px-1 pt-1">
+                <label class="col-md-2 label-control" for="bmi">Image Name</label>
+                <div class="col-md-3"><input class="form-control" type="text" id="image_name" /></div>
+              </div>
+              <div class="form-group row px-1 pt-1">
+                <label class="col-md-2 label-control" for="bmi">Image Date</label>
+                <div class="col-md-3"><input class="form-control" type="text" id="image_date" placeholder="mm/dd/yyyy" /></div>
+              </div>
+              <div class="form-group row px-1 pt-1">
                 <div class="col-md-6">
-                  <input id="fileupload" type="file" name="file" data-url="/upload/" class="form-control" multiple>
+                  <input id="fileupload" type="file" name="file" data-url="/upload/" class="form-control">
                 </div>
               </div>
 
