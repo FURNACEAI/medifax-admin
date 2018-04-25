@@ -467,6 +467,8 @@
               {% for image in data.images.medical %}
                 <div class="col-md-4" style="padding: 10px;">
                     <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
+                    <div style="font-type: 600">{{ image[1] }}</div>
+                    <div>{{ image[2] }}</div>
                     <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
               {% endfor %}
@@ -502,6 +504,8 @@
               {% for image in data.images.dental %}
                 <div class="col-md-4" style="padding: 10px; text-align: center;">
                   <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
+                  <div style="font-type: 600">{{ image[1] }}</div>
+                  <div>{{ image[2] }}</div>
                   <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
               {% endfor %}
