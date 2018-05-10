@@ -331,7 +331,7 @@ def add_customer():
             url = "/customers"
             return redirect(url)
         else:
-            flash('Employee creation failed.')
+            flash('Customer creation failed.')
     return render_template('customers/add.html', title='Add a Customer | Medifax', form=form)
 
 """ EMPLOYEE > DELETE """
