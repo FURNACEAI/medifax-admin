@@ -2,9 +2,9 @@ import os
 
 _AWS = {
     'headers': {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" },
-    'status': 'dev',
+    'status': 'prod',
     'employees': {
-        'base' : 'https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/',
+        'base' : 'https://5y96pktw7j.execute-api.us-east-1.amazonaws.com/',
         'list': '/employee/list',
         'add': '/employee/create',
         'delete': '/employee/delete/',
@@ -13,7 +13,7 @@ _AWS = {
         'auth': '/employee/auth'
     },
     'customers': {
-        'base' : 'https://7z6lcegucj.execute-api.us-east-1.amazonaws.com/',
+        'base' : 'https://u3tad4wx2c.execute-api.us-east-1.amazonaws.com/',
         'list': '/customers/list',
         'add': '/customers/create',
         'delete': '/customers/',

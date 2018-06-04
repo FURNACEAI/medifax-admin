@@ -13,9 +13,9 @@ from werkzeug.utils import secure_filename
 import uuid
 import tinys3
 
-AWS_ACCESS_KEY = 'AKIAJP3PFD5RDENKVTQA'
-AWS_SECRET_KEY = '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'
-AWS_S3_BUCKET = 'medifax-images'
+AWS_ACCESS_KEY = 'AKIAIXSR6MUKBEQC3VZA'
+AWS_SECRET_KEY = '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'
+AWS_S3_BUCKET = 'com.medifax.images'
 
 ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
 

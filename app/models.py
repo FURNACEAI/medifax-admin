@@ -208,7 +208,7 @@ class User(UserMixin):
         }
         payload = json.dumps(payload)
 
-        r = requests.post('https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/create', headers=self.headers, data=payload)
+        r = requests.post('https://5y96pktw7j.execute-api.us-east-1.amazonaws.com/prod/employee/create', headers=self.headers, data=payload)
         req = r.json()
         if req['message'] == 'Success':
             self.id = req['id']
@@ -233,7 +233,7 @@ class User(UserMixin):
             return False
 
     def load(self, id):
-        url = "https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/%s" % id
+        url = "https://5y96pktw7j.execute-api.us-east-1.amazonaws.com/prod/employee/%s" % id
         r = requests.get(url).json()
         self.user_id = r['id']
         self.first_name = r['name']['first']
