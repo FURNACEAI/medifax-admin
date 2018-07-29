@@ -55,7 +55,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="sub-tab" data-toggle="tab" href="#sub" aria-controls="sub"
-              aria-expanded="false">Subscription</a>
+              aria-expanded="false">Account</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" aria-controls="medical"
@@ -73,7 +73,7 @@
               aria-expanded="false">Insurance</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" aria-controls="images">Images</a>
+              <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" aria-controls="images">File Upload</a>
             </li>
           </ul>
 
@@ -463,17 +463,37 @@
               </div>
             </div>
 
+            <h4 class="form-section">Medical Images</h4>
             <div class="form-group row px-1 pt-1">
               {% for image in data.images.medical %}
+                {% if image[0] | file_type == 'img' %}
                 <div class="col-md-4" style="padding: 10px;">
                     <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
                     <div style="font-weight: 600">{{ image[1] }}</div>
                     <div>{{ image[2] }}</div>
                     <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+
+            <h4 class="form-section">Medical Documents</h4>
+            <div class="form-group row px-1 pt-1">
+              {% for image in data.images.medical %}
+                {% if image[0] | file_type == 'doc' %}
+                <div class="col-md-4" style="padding: 10px;">
+                    <center>
+                    <a href="{{ image[0] }}" target="_blank"><img src="/static/images/file-icon.png" class="img-fluid" style="width: 70px;" /></a>
+                    <div style="font-weight: 600">{{ image[1] }}</div>
+                    <div>{{ image[2] }}</div>
+                    <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
+                </div>
+                {% endif %}
               {% endfor %}
             </div>
           </div>
+
           <!-- End Medical Tab Pane -->
 
           <div class="tab-pane" id="dental" role="tabpanel" aria-labelledby="dental-tab" aria-expanded="false">
@@ -500,14 +520,33 @@
               </div>
             </div>
 
-            <div class="form-group row px-1 pt-1" style="text-align: center">
+            <h4 class="form-section">Dental Images</h4>
+            <div class="form-group row px-1 pt-1">
               {% for image in data.images.dental %}
-                <div class="col-md-4" style="padding: 10px; text-align: center;">
-                  <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
-                  <div style="font-weight: 600">{{ image[1] }}</div>
-                  <div>{{ image[2] }}</div>
-                  <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
+                {% if image[0] | file_type == 'img' %}
+                <div class="col-md-4" style="padding: 10px;">
+                    <center><a href="{{ image[0] }}" target="_blank"><img src="{{ image[0] }}" class="img-fluid" /></a>
+                    <div style="font-weight: 600">{{ image[1] }}</div>
+                    <div>{{ image[2] }}</div>
+                    <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
                 </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+
+            <h4 class="form-section">Dental Documents</h4>
+            <div class="form-group row px-1 pt-1">
+              {% for image in data.images.dental %}
+                {% if image[0] | file_type == 'doc' %}
+                <div class="col-md-4" style="padding: 10px;">
+                    <center>
+                    <a href="{{ image[0] }}" target="_blank"><img src="/static/images/file-icon.png" class="img-fluid" style="width: 70px;" /></a>
+                    <div style="font-weight: 600">{{ image[1] }}</div>
+                    <div>{{ image[2] }}</div>
+                    <br /><a href="#" class="btn btn-danger delete-file" id="{{ image[0] | extract_key }}" style="margin-top: 5px;">Delete</a></center>
+                </div>
+                {% endif %}
               {% endfor %}
             </div>
           </div>
@@ -750,22 +789,32 @@
           <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="images-tab" aria-expanded="false">
             <div class="form-group row px-1 pt-1">
               <div class="col-md-12">
-              <h4 class="form-section"><i class="fa fa-image"></i> Diagnostic Images</h4>
+              <h4 class="form-section"><i class="fa fa-image"></i> Images & Documents</h4>
 
               <div class="form-group row px-1 pt-1">
-                <label class="col-md-2 label-control" for="bmi">Image Type</label>
-                <div class="col-md-3"><select class="form-control" id="image_type" name="img_type" placeholder=""><option value="medical">Medical</option><option value="dental">Dental</option></select></div>
+                <label class="col-md-2 label-control" for="bmi">File Type</label>
+                <div class="col-md-3">
+                  <select class="form-control" id="image_type" name="img_type" placeholder="">
+                    <option value="medical">Medical Image or Document</option>
+                    <option value="dental">Dental Image or Document</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group row px-1 pt-1">
-                <label class="col-md-2 label-control" for="bmi">Image Name</label>
+                <label class="col-md-2 label-control" for="bmi">File Name</label>
                 <div class="col-md-3"><input class="form-control" type="text" id="image_name" /></div>
               </div>
               <div class="form-group row px-1 pt-1">
-                <label class="col-md-2 label-control" for="bmi">Image Date</label>
+                <label class="col-md-2 label-control" for="bmi">File Date</label>
                 <div class="col-md-3"><input class="form-control" type="text" id="image_date" placeholder="mm/dd/yyyy" /></div>
               </div>
               <div class="form-group row px-1 pt-1">
                 <div class="col-md-6">
+                  <strong>Please note:</strong>
+                  <ul>
+                    <li>You can only upload one file at a time</li>
+                    <li>Once you select the file the upload will begin immediately</li>
+                  </ul>
                   <input id="fileupload" type="file" name="file" data-url="/upload/" class="form-control">
                 </div>
               </div>

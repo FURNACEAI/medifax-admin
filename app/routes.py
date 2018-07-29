@@ -15,9 +15,10 @@ import tinys3
 
 AWS_ACCESS_KEY = 'AKIAIXSR6MUKBEQC3VZA'
 AWS_SECRET_KEY = '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'
-AWS_S3_BUCKET = 'com.medifax.images'
+AWS_S3_BUCKET = 'medifax-customer-images'
 
-ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
+ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG', 'PDF', 'pdf', 'docx', 'DOCX', 'xlsx', 'XLSX', 'csv', 'CSV']
+IMAGE_EXTENSIONS = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG', 'svg', 'SVG']
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -43,6 +44,16 @@ def extract_key(s):
 def timectime(s):
     """ Formats a Python timestamp to a human-readable format """
     return "<br />".join(s.split("\n"))
+
+@application.template_filter('file_type')
+def file_type(s):
+    """ Returns either 'img' or 'doc' based on the file """
+    filename, file_extension = os.path.splitext(s)
+    print(file_extension)
+    if file_extension.replace(".", "") in IMAGE_EXTENSIONS:
+        return "img"
+    else:
+        return "doc"
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
@@ -75,7 +86,7 @@ def delete_employee(user_id):
     """ Delete the employee record and return the user back to the list of employees """
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    url = "https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/%s" % user_id
+    url = "https://5y96pktw7j.execute-api.us-east-1.amazonaws.com/prod/employee/%s" % user_id
     headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
     r = requests.delete(url, headers=headers)
     flash('Success. The employee record was deleted.')
@@ -106,7 +117,7 @@ def list_employees():
         return redirect(url_for('login'))
     headers = {'user-agent': 'medifax/0.0.1', "Content-Type":"application/json" }
     # payload = json.dumps(payload)
-    r = requests.get('https://3ts6m0h20j.execute-api.us-east-1.amazonaws.com/dev/employee/list', headers=headers)
+    r = requests.get('https://5y96pktw7j.execute-api.us-east-1.amazonaws.com/prod/employee/list', headers=headers)
     return render_template('employees/list.html', title='Employees | Medifax', data=r.json())
 
 
@@ -145,7 +156,7 @@ def upload_file():
 
     # check if the post request has the file part
     if 'file' not in request.files:
-        print('No file part')
+        print('There is no file part')
         return "False"
     file = request.files['file']
 
@@ -164,7 +175,7 @@ def upload_file():
         file.save(local_filepath)
         # Now open the file and save to S3
         f = open(local_filepath,'rb')
-        up = conn.upload(s3_filepath,f,'medifax-images', headers={
+        up = conn.upload(s3_filepath,f,AWS_S3_BUCKET, headers={
             'x-amz-meta-imgname': request.form['image_name'],
             'x-amz-meta-imgdate': request.form['image_date']
             })
@@ -179,7 +190,9 @@ def upload_file():
         # result['name'] = filename
         return r
         # return "True"
-    return "False"
+    else:
+        return "Upload Failed"
+    # return "False"
 
 
 @application.route('/customers/edit/<user_id>', methods=['GET', 'POST'])
@@ -349,7 +362,7 @@ def delete_customer(user_id):
 @application.route('/images/upload')
 def upload():
     if current_user.is_authenticated:
-        bucket = 'medifax-customers-images-dev'
+        bucket = AWS_S3_BUCKET
     else:
         return redirect(url_for('login'))
 
